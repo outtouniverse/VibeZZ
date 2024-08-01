@@ -12,30 +12,33 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
+// Middleware
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
+// CORS configuration
 app.use(cors({
-    origin: 'https://vibe-zz-re.vercel.app', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-  }));
+  origin: ['https://vibe-zz-re.vercel.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 
+// Cloudinary configuration
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-app.get("/",
-    (req, res) => {
-        res.send("Hello World");
-    }
-)
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
+// Server start
 app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+  console.log(`Server started on port ${PORT}`);
 });
