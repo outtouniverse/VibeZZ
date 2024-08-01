@@ -9,7 +9,7 @@ export default defineConfig({
     
     proxy:{
       '/api':{
-        target:'https://vibe-zz.vercel.app/',
+        target:'https://vibe-zz.vercel.app',
         changeOrigin:true,
         secure:false
       }
