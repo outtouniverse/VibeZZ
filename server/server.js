@@ -21,7 +21,11 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
-
+app.get("/",
+    (req, res) => {
+        res.send("Hello World");
+    }
+)
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
