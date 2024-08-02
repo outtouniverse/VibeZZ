@@ -19,7 +19,7 @@ app.use(cookieParser());
 
 // CORS configuration
 app.use(cors({
-  origin: ['https://vibe-zz-re.vercel.app', 'http://localhost:3000'],
+  origin: ['https://vibe-zz.vercel.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
