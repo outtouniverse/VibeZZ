@@ -7,10 +7,10 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://vibe-zz.vercel.app',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        target: 'https://vibe-zz.vercel.app', 
+        changeOrigin: true, 
+        secure: false, 
+        rewrite: (path) => path.replace(/^\/api/, ''), 
       },
     },
   },
