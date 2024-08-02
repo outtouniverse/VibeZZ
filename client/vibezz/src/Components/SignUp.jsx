@@ -21,6 +21,7 @@ import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useSetRecoilState } from 'recoil';
 import authScreenAtom from '../atoms/authAtom.js';
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +38,7 @@ export default function SignUp() {
   const handleSignup = async () => {
     setLoading(true); // Set loading state to true when signup starts
     try {
-      const response = await fetch("/api/users/sign", {
+      const response = await fetch("${apiBaseUrl}/api/users/sign", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

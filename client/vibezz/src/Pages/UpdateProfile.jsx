@@ -14,7 +14,10 @@ import {
 import { useRecoilState } from 'recoil';
 import userAtom from '../atoms/userAtom';
 import { useShowToast } from '../hooks/useShowToast';
+
 import userpreview from '../hooks/userpreview';
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 
 export default function UpdateProfile() {
   const [user, setUser] = useRecoilState(userAtom);
@@ -35,7 +38,7 @@ export default function UpdateProfile() {
     e.preventDefault();
     setLoading(true)
     try {
-      const res = await fetch(`/api/users/update/${user._id}`, {
+      const res = await fetch(`${apiBaseUrl}/api/users/update/${user._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

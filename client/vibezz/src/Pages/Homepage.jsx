@@ -6,6 +6,8 @@ import postsAtom from '../atoms/postsAtom';
 import userAtom from '../atoms/userAtom';
 import { useShowToast } from '../hooks/useShowToast';
 import { Link } from 'react-router-dom';
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 
 const HomePage = () => {
   const [feedPosts, setFeedPosts] = useRecoilState(postsAtom);
@@ -23,7 +25,7 @@ const HomePage = () => {
       setLoading(true);
       setFeedPosts([]);
       try {
-        const response = await fetch('/api/posts/feed');
+        const response = await fetch('${apiBaseUrl}/api/posts/feed');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -39,7 +41,7 @@ const HomePage = () => {
 
     const getUsers = async () => {
       try {
-        const res = await fetch('/api/users/alluser', {
+        const res = await fetch('${apiBaseUrl}/api/users/alluser', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

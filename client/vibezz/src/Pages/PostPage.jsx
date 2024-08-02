@@ -10,6 +10,8 @@ import { useShowToast } from "../hooks/useShowToast";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from "recoil";
 import postsAtom from "../atoms/postsAtom.js";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 
 const PostPage = () => {
   const { user, loading } = usegetpro();
@@ -28,7 +30,7 @@ const PostPage = () => {
     const fetchPost = async () => {
       setposts([])
       try {
-        const res = await fetch(`/api/posts/${pid}`, {
+        const res = await fetch(`${apiBaseUrl}/api/posts/${pid}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -53,7 +55,7 @@ const PostPage = () => {
      
       if(!window.confirm("Are you sure you want to delete this post?"))return;
 
-      const res=await fetch(`/api/posts/${currentpost?._id}`,{
+      const res=await fetch(`${apiBaseUrl}/api/posts/${currentpost?._id}`,{
         method:"DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -4,6 +4,8 @@ import { IoLogOutSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import userAtom from "../atoms/userAtom";
 import { useShowToast } from "../hooks/useShowToast";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 
 export const Logout = () => {
   const setUser = useSetRecoilState(userAtom);
@@ -12,7 +14,7 @@ export const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("/api/users/logout", {
+      const res = await fetch("${apiBaseUrl}/api/users/logout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });

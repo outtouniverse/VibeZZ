@@ -22,6 +22,7 @@ import { useSetRecoilState } from 'recoil';
 import authScreenAtom from '../atoms/authAtom.js';
 import userAtom from '../atoms/userAtom.js';
 import { useShowToast } from '../hooks/useShowToast.js';
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +43,7 @@ export default function Login() {
     setLoading(true)
     try {
    
-      const res = await fetch('https://vibe-zz.vercel.app/api/users/login', {
+      const res = await fetch('${apiBaseUrl}/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(inputs),

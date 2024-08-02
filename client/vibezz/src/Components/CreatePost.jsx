@@ -8,6 +8,8 @@ import userAtom from '../atoms/userAtom';
 import { useShowToast } from '../hooks/useShowToast';
 import postsAtom from '../atoms/postsAtom';
 import { useParams } from 'react-router-dom';
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 
 const MAX = 500;
 
@@ -38,7 +40,7 @@ export const CreatePost = () => {
   const handlePost = async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/posts/create', {
+      const res = await fetch('${apiBaseUrl}/api/posts/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ postedBy: user._id, text: postText, img: imgUrl })
