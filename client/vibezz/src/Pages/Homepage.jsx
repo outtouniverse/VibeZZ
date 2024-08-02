@@ -23,12 +23,14 @@ const HomePage = () => {
   
   useEffect(() => {
     const getFeed = async () => {
-      
-
       setLoading(true);
       setFeedPosts([]);
       try {
-        const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`);
+        const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`, {
+          headers: {
+            'Authorization': `Bearer ${user.token}`, 
+          },
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -41,6 +43,7 @@ const HomePage = () => {
         setLoading(false);
       }
     };
+    
 
     const getUsers = async () => {
       try {
