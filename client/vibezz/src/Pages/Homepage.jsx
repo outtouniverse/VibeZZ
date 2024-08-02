@@ -28,7 +28,7 @@ const HomePage = () => {
       setLoading(true);
       setFeedPosts([]);
       try {
-        const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`);
+        const response = await fetch(`https://vibe-zz.vercel.app/apiapi/posts/feed`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -44,7 +44,7 @@ const HomePage = () => {
 
     const getUsers = async () => {
       try {
-        const res = await fetch(`https://vibe-zz.vercel.app/api/users/alluser`, {
+        const res = await fetch(`https://vibe-zz.vercel.app/apiapi/users/alluser`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

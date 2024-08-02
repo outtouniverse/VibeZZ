@@ -39,7 +39,7 @@ const UserHeader = ({ user }) => {
         setupdating(true);
 
         try {
-            const res = await fetch(`https://vibe-zz.vercel.app/users/follow/${user._id}`, {
+            const res = await fetch(`https://vibe-zz.vercel.app/apiusers/follow/${user._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

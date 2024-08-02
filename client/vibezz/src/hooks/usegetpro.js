@@ -12,7 +12,7 @@ export const usegetpro = () => {
     const getUser = async () => {
         try {
            
-            const res = await fetch(`https://vibe-zz.vercel.app/users/profile/${username}`);
+            const res = await fetch(`https://vibe-zz.vercel.app/apiusers/profile/${username}`);
             const data = await res.json();
             if (data.error) {
                 showToast("Error", data.error, "error");

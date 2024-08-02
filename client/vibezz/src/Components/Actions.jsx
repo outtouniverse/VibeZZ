@@ -23,7 +23,7 @@ const Actions = ( {post} ) => {
         if(islike)return;
         setislike(true)
         try {
-            const res=await fetch(`https://vibe-zz.vercel.app/posts/like/`+post._id,{
+            const res=await fetch(`https://vibe-zz.vercel.app/apiposts/like/`+post._id,{
                 method:"PUT",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({userId:user._id})
@@ -59,7 +59,7 @@ const Actions = ( {post} ) => {
         if(isreply) return;
         setisreply(true);   
         try{
-            const res=await fetch(`https://vibe-zz.vercel.app/posts/reply/`+post._id,{
+            const res=await fetch(`https://vibe-zz.vercel.app/apiposts/reply/`+post._id,{
                 method:"PUT",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({text:reply})
