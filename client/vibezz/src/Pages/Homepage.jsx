@@ -27,10 +27,12 @@ const HomePage = () => {
       setFeedPosts([]);
       try {
         const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`, {
+          method:"GET",
           headers: {
             'Content-Type': 'application/json',
         },
         credentials: 'include',
+        
         });
         if (!response.ok) {
           throw new Error('Network response was not ok');
