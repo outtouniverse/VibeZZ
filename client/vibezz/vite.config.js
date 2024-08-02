@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    proxy: {
+   /* proxy: {
       '/api': {
         target: 'https://vibe-zz.vercel.app', 
         changeOrigin: true, 
@@ -13,5 +13,6 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''), 
       },
     },
+    */
   },
 });
