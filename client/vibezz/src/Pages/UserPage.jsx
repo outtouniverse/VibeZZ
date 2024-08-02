@@ -6,8 +6,7 @@ import { usegetpro } from "../hooks/usegetpro";
 import { useShowToast } from '../hooks/useShowToast';
 import { useRecoilState } from "recoil";
 import postsAtom from "../atoms/postsAtom";
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-
+//
 
 const UserPage = () => {
     const { user, loading } = usegetpro();
@@ -21,7 +20,7 @@ const UserPage = () => {
                 
                 try {
                     setFetching(true);
-                    const response = await fetch(`${apiBaseUrl}/posts/user/${user.username}`);
+                    const response = await fetch(`https://vibe-zz.vercel.app/posts/user/${user.username}`);
                    
                     if (!response.ok) {
                         throw new Error("Failed to fetch posts");

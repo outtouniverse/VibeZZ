@@ -5,8 +5,7 @@ import { useShowToast } from "../hooks/useShowToast";
 import {useRecoilState, useRecoilValue} from "recoil";
 import userAtom from "../atoms/userAtom";
 import postsAtom from "../atoms/postsAtom";
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-
+//
 
 const Actions = ( {post} ) => {
     const[posts,setpost]=useRecoilState(postsAtom);
@@ -24,7 +23,7 @@ const Actions = ( {post} ) => {
         if(islike)return;
         setislike(true)
         try {
-            const res=await fetch(`${apiBaseUrl}/posts/like/`+post._id,{
+            const res=await fetch(`https://vibe-zz.vercel.app/posts/like/`+post._id,{
                 method:"PUT",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({userId:user._id})
@@ -60,7 +59,7 @@ const Actions = ( {post} ) => {
         if(isreply) return;
         setisreply(true);   
         try{
-            const res=await fetch(`${apiBaseUrl}/posts/reply/`+post._id,{
+            const res=await fetch(`https://vibe-zz.vercel.app/posts/reply/`+post._id,{
                 method:"PUT",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({text:reply})

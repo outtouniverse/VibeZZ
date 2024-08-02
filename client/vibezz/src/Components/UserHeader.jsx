@@ -18,8 +18,7 @@ import { useRecoilValue } from "recoil";
 import { Link as RouterLink } from "react-router-dom";
 import { useShowToast } from "../hooks/useShowToast";
 import userAtom from "../atoms/userAtom";
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-
+//
 const UserHeader = ({ user }) => {
     const showToast = useShowToast();
     const currentUser = useRecoilValue(userAtom);
@@ -40,7 +39,7 @@ const UserHeader = ({ user }) => {
         setupdating(true);
 
         try {
-            const res = await fetch(`${apiBaseUrl}/users/follow/${user._id}`, {
+            const res = await fetch(`https://vibe-zz.vercel.app/users/follow/${user._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
