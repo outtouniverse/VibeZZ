@@ -37,7 +37,7 @@ export default function UpdateProfile() {
     e.preventDefault();
     setLoading(true)
     try {
-      const res = await fetch(`https://vibe-zz.vercel.app/apiapi/users/update/${user._id}`, {
+      const res = await fetch(`https://vibe-zz.vercel.app/api/api/users/update/${user._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -13,7 +13,7 @@ export const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch(`https://vibe-zz.vercel.app/apiusers/logout`, {
+      const res = await fetch(`https://vibe-zz.vercel.app/api/users/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });

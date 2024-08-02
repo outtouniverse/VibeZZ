@@ -42,7 +42,7 @@ export default function Login() {
     setLoading(true)
     try {
    
-      const res = await fetch(`https://vibe-zz.vercel.app/apiapi/users/login`, {
+      const res = await fetch(`https://vibe-zz.vercel.app/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(inputs),

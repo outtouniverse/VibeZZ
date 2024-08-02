@@ -39,7 +39,7 @@ export const CreatePost = () => {
   const handlePost = async () => {
     setLoading(true)
     try {
-      const res = await fetch(`https://vibe-zz.vercel.app/apiposts/create`, {
+      const res = await fetch(`https://vibe-zz.vercel.app/api/posts/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ postedBy: user._id, text: postText, img: imgUrl })

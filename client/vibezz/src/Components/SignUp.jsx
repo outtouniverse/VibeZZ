@@ -37,7 +37,7 @@ export default function SignUp() {
   const handleSignup = async () => {
     setLoading(true); // Set loading state to true when signup starts
     try {
-      const response = await fetch(`https://vibe-zz.vercel.app/apiusers/sign`, {
+      const response = await fetch(`https://vibe-zz.vercel.app/api/users/sign`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

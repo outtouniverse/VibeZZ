@@ -20,7 +20,7 @@ const UserPage = () => {
                 
                 try {
                     setFetching(true);
-                    const response = await fetch(`https://vibe-zz.vercel.app/apiposts/user/${user.username}`);
+                    const response = await fetch(`https://vibe-zz.vercel.app/api/posts/user/${user.username}`);
                    
                     if (!response.ok) {
                         throw new Error("Failed to fetch posts");

@@ -29,7 +29,7 @@ const PostPage = () => {
     const fetchPost = async () => {
       setposts([])
       try {
-        const res = await fetch(`https://vibe-zz.vercel.app/apiposts/${pid}`, {
+        const res = await fetch(`https://vibe-zz.vercel.app/api/posts/${pid}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -54,7 +54,7 @@ const PostPage = () => {
      
       if(!window.confirm("Are you sure you want to delete this post?"))return;
 
-      const res=await fetch(`https://vibe-zz.vercel.app/apiposts/${currentpost?._id}`,{
+      const res=await fetch(`https://vibe-zz.vercel.app/api/posts/${currentpost?._id}`,{
         method:"DELETE",
         headers: {
           "Content-Type": "application/json",
