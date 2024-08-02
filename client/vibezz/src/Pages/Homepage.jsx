@@ -7,9 +7,6 @@ import userAtom from '../atoms/userAtom';
 import { useShowToast } from '../hooks/useShowToast';
 import { Link } from 'react-router-dom';
 
-
-
-
 const HomePage = () => {
   const [feedPosts, setFeedPosts] = useRecoilState(postsAtom);
   const [loading, setLoading] = useState(true);
@@ -51,7 +48,7 @@ const HomePage = () => {
     const getUsers = async () => {
       try {
         const res = await fetch(`https://vibe-zz.vercel.app/api/users/alluser`, {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },

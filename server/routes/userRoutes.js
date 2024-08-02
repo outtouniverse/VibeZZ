@@ -5,7 +5,7 @@ import { protect } from "../middleware/protect.js";
 const router=express.Router();
 
 router.get("/profile/:query",getprofile);
-router.post("/alluser",alluser);
+router.get("/alluser",alluser);
 router.post("/sign",signupuser);
 router.post("/login",loginuser);
 router.post("/logout",logout);
