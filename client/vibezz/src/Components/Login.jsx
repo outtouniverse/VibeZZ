@@ -45,6 +45,7 @@ export default function Login() {
       const res = await fetch(`https://vibe-zz.vercel.app/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(inputs),
       });
      
