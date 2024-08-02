@@ -21,7 +21,7 @@ const UserPage = () => {
                 
                 try {
                     setFetching(true);
-                    const response = await fetch(`${apiBaseUrl}/api/posts/user/${user.username}`);
+                    const response = await fetch(`${apiBaseUrl}/posts/user/${user.username}`);
                    
                     if (!response.ok) {
                         throw new Error("Failed to fetch posts");

@@ -14,7 +14,7 @@ export const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("${apiBaseUrl}/api/users/logout", {
+      const res = await fetch(`${apiBaseUrl}/users/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });

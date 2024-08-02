@@ -40,7 +40,7 @@ const UserHeader = ({ user }) => {
         setupdating(true);
 
         try {
-            const res = await fetch(`${apiBaseUrl}/api/users/follow/${user._id}`, {
+            const res = await fetch(`${apiBaseUrl}/users/follow/${user._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

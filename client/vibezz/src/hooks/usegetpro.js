@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useShowToast } from './useShowToast'
 import  { useEffect } from "react";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 export const usegetpro = () => {
   const[user,setUser]=useState(null)
@@ -12,7 +13,7 @@ export const usegetpro = () => {
     const getUser = async () => {
         try {
            
-            const res = await fetch(`/api/users/profile/${username}`);
+            const res = await fetch(`${apiBaseUrl}/users/profile/${username}`);
             const data = await res.json();
             if (data.error) {
                 showToast("Error", data.error, "error");

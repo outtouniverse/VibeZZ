@@ -38,7 +38,7 @@ export default function UpdateProfile() {
     e.preventDefault();
     setLoading(true)
     try {
-      const res = await fetch(`${apiBaseUrl}/api/users/update/${user._id}`, {
+      const res = await fetch(`${apiBaseUrl}/users/update/${user._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

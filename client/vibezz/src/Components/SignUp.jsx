@@ -38,7 +38,7 @@ export default function SignUp() {
   const handleSignup = async () => {
     setLoading(true); // Set loading state to true when signup starts
     try {
-      const response = await fetch("${apiBaseUrl}/api/users/sign", {
+      const response = await fetch(`${apiBaseUrl}/users/sign`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

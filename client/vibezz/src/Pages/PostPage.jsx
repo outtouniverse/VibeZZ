@@ -30,7 +30,7 @@ const PostPage = () => {
     const fetchPost = async () => {
       setposts([])
       try {
-        const res = await fetch(`${apiBaseUrl}/api/posts/${pid}`, {
+        const res = await fetch(`${apiBaseUrl}/posts/${pid}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const PostPage = () => {
      
       if(!window.confirm("Are you sure you want to delete this post?"))return;
 
-      const res=await fetch(`${apiBaseUrl}/api/posts/${currentpost?._id}`,{
+      const res=await fetch(`${apiBaseUrl}/posts/${currentpost?._id}`,{
         method:"DELETE",
         headers: {
           "Content-Type": "application/json",

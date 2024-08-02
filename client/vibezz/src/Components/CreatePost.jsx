@@ -40,7 +40,7 @@ export const CreatePost = () => {
   const handlePost = async () => {
     setLoading(true)
     try {
-      const res = await fetch('${apiBaseUrl}/api/posts/create', {
+      const res = await fetch(`${apiBaseUrl}/posts/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ postedBy: user._id, text: postText, img: imgUrl })
