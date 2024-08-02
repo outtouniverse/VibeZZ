@@ -6,7 +6,8 @@ import postsAtom from '../atoms/postsAtom';
 import userAtom from '../atoms/userAtom';
 import { useShowToast } from '../hooks/useShowToast';
 import { Link } from 'react-router-dom';
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+const apiBaseUrl = import.meta.env.REACT_APP_API_BASE_URL;
+
 
 
 const HomePage = () => {
@@ -22,6 +23,8 @@ const HomePage = () => {
   
   useEffect(() => {
     const getFeed = async () => {
+      console.log('API Base URL:', apiBaseUrl);
+
       setLoading(true);
       setFeedPosts([]);
       try {
