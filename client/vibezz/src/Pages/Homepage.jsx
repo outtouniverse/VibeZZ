@@ -20,14 +20,16 @@ const HomePage = () => {
   
   useEffect(() => {
     const getFeed = async () => {
+      const token = JSON.parse(localStorage.getItem('user-vibezz'))?.token;
       setLoading(true);
       setFeedPosts([]);
       try {
         const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`, {
           method:"GET",
           headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
-        },
+          },
         credentials: 'include'
         
         });
