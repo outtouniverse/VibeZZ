@@ -38,12 +38,7 @@ export default function Login() {
   const handleChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
-  const token = JSON.parse(localStorage.getItem('user-vibezz'))?.token;
-  if (!token) {
-    console.error('No token found, please log in again.');
-    setError('Not authenticated');
-    return;
-  }
+  
 
   const handleLogin = async () => {
     setLoading(true)
