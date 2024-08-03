@@ -18,7 +18,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
 app.use(cors({
-  origin: ['https://vibe-zz-re.vercel.app',"http://localhost:3000/" ],
+  origin: 'https://vibe-zz-re.vercel.app',
   credentials: true, 
 }));
 
