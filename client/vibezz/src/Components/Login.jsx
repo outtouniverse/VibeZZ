@@ -46,35 +46,32 @@ export default function Login() {
   }
 
   const handleLogin = async () => {
-    setLoading(true);
-    setError(''); // Clear previous errors
+    setLoading(true)
     try {
+   
       const res = await fetch(`https://vibe-zz.vercel.app/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(inputs),
       });
-  
+     
       const data = await res.json();
-  
+     
       if (data.error) {
-        showToast("Error", data.error, "error");
-        setError(data.error); // Set error message
+        showToast("Error",data.error,"error");
         return;
       }
-  
       localStorage.setItem('user-vibezz', JSON.stringify(data));
       setUser(data);
+     
     } catch (error) {
       console.error('Error during login:', error);
       showToast('Error', error.toString(), 'error');
-      setError(error.toString()); // Set error message
-    } finally {
-      setLoading(false);
+    }finally{
+      setLoading(false)
     }
   };
-  
 
   return (
     <Flex pb={8} align={'center'} justify={'center'}
