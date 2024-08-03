@@ -27,6 +27,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
   const setUser = useSetRecoilState(userAtom);
+  const[error,setError]=useState("")
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
@@ -45,32 +46,35 @@ export default function Login() {
   }
 
   const handleLogin = async () => {
-    setLoading(true)
+    setLoading(true);
+    setError(''); // Clear previous errors
     try {
-   
       const res = await fetch(`https://vibe-zz.vercel.app/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(inputs),
       });
-     
+  
       const data = await res.json();
-     
+  
       if (data.error) {
-        showToast("Error",data.error,"error");
+        showToast("Error", data.error, "error");
+        setError(data.error); // Set error message
         return;
       }
+  
       localStorage.setItem('user-vibezz', JSON.stringify(data));
       setUser(data);
-     
     } catch (error) {
       console.error('Error during login:', error);
       showToast('Error', error.toString(), 'error');
-    }finally{
-      setLoading(false)
+      setError(error.toString()); // Set error message
+    } finally {
+      setLoading(false);
     }
   };
+  
 
   return (
     <Flex pb={8} align={'center'} justify={'center'}
