@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Flex,
@@ -22,56 +22,72 @@ import { useSetRecoilState } from 'recoil';
 import authScreenAtom from '../atoms/authAtom.js';
 import userAtom from '../atoms/userAtom.js';
 import { useShowToast } from '../hooks/useShowToast.js';
-//
+
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
   const setUser = useSetRecoilState(userAtom);
-  const[error,setError]=useState("")
+  const [error, setError] = useState('');
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
   });
   const showToast = useShowToast();
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
-  
 
   const handleLogin = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-   
       const res = await fetch(`https://vibe-zz.vercel.app/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(inputs),
       });
-     
+
       const data = await res.json();
-     
+
       if (data.error) {
-        showToast("Error",data.error,"error");
+        showToast("Error", data.error, "error");
+        setError(data.error);
         return;
       }
-      localStorage.setItem('user-vibezz', JSON.stringify(data));
-      setUser(data);
-     
+
+      
+      localStorage.setItem('user-vibezz', JSON.stringify({
+        _id: data._id,
+        name: data.name,
+        email: data.email,
+        username: data.username,
+        bio: data.bio,
+        profilepic: data.profilepic,
+      }));
+      
+      
+      setUser({
+        _id: data._id,
+        name: data.name,
+        email: data.email,
+        username: data.username,
+        bio: data.bio,
+        profilepic: data.profilepic,
+      });
     } catch (error) {
       console.error('Error during login:', error);
       showToast('Error', error.toString(), 'error');
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <Flex pb={8} align={'center'} justify={'center'}
-    borderRadius={10}
-     bg={useColorModeValue('white', 'gray.light')}>
+      borderRadius={10}
+      bg={useColorModeValue('white', 'gray.light')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={4} px={4}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
@@ -89,61 +105,60 @@ export default function Login() {
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
-          <Box >
-            <FormControl isRequired>
-              <FormLabel>Username</FormLabel>
-              <Input
-                type="text"
-                name="username"
-                value={inputs.username}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
+            <Box>
+              <FormControl isRequired>
+                <FormLabel>Username</FormLabel>
                 <Input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  value={inputs.password}
+                  type="text"
+                  name="username"
+                  value={inputs.username}
                   onChange={handleChange}
                 />
-                <InputRightElement h={'full'}>
-                  <Button
-                    variant={'ghost'}
-                    onClick={() => setShowPassword((showPassword) => !showPassword)}
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Stack spacing={10} pt={5}>
-              <Button
-                loadingText="Loggin In"
-                size="lg"
-                bg={useColorModeValue('gray.600', 'gray.800')}
-                color={'white'}
-                _hover={{
-                  bg: useColorModeValue('gray.700', 'gray.700'),
-                }}
-                onClick={handleLogin}
-                isLoading={loading}
-              >
-                Login
-              </Button>
-            </Stack>
-            <Stack pt={6}>
-              <Text align={'center'}>
-                Don't have an account?{' '}
-                <Link onClick={() => setAuthScreen('SignUp')} color={'blue.400'}>
-                  SignUp
-                </Link>
-              </Text>
-            </Stack>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Password</FormLabel>
+                <InputGroup>
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    value={inputs.password}
+                    onChange={handleChange}
+                  />
+                  <InputRightElement h={'full'}>
+                    <Button
+                      variant={'ghost'}
+                      onClick={() => setShowPassword((showPassword) => !showPassword)}
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Stack spacing={10} pt={5}>
+                <Button
+                  loadingText="Logging In"
+                  size="lg"
+                  bg={useColorModeValue('gray.600', 'gray.800')}
+                  color={'white'}
+                  _hover={{
+                    bg: useColorModeValue('gray.700', 'gray.700'),
+                  }}
+                  onClick={handleLogin}
+                  isLoading={loading}
+                >
+                  Login
+                </Button>
+              </Stack>
+              <Stack pt={6}>
+                <Text align={'center'}>
+                  Don't have an account?{' '}
+                  <Link onClick={() => setAuthScreen('SignUp')} color={'blue.400'}>
+                    SignUp
+                  </Link>
+                </Text>
+              </Stack>
             </Box>
           </Stack>
-          
         </Box>
       </Stack>
     </Flex>

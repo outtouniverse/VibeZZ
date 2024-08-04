@@ -28,8 +28,9 @@ const signupuser=async(req,res)=>{
         await newuser.save();
 
         if(newuser){
-            token_cookie(newuser._id,res);
+            const token = token_cookie(newuser._id,res);
             res.status(201).json({
+                token, 
                 _id:newuser._id,
                 name:newuser.name,
                 email:newuser.email,
@@ -59,9 +60,10 @@ const loginuser=async(req,res)=>{
 
         if(!user || !ispassword) return res.status(400).json({error:"Invalid username or password"});
 logout
-        token_cookie(user._id,res);
+        const token = token_cookie(user._id, res);
 
         res.status(200).json({
+            token, 
             _id:user._id,
                 name:user.name,
                 email:user.email,
