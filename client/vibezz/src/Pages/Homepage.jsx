@@ -13,31 +13,41 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const [users, setUsers] = useState([]);
   const showToast = useShowToast();
-  const [user, setUser] = useRecoilState(userAtom);
+  const [user] = useRecoilState(userAtom); // Only read user info from state
 
   const bgColor = useColorModeValue('gray.400', 'gray.light');
   const hoverBgColor = useColorModeValue('gray.500', 'gray.dark');
-  
+
   useEffect(() => {
     const getFeed = async () => {
-      const token = JSON.parse(localStorage.getItem('user-vibezz'))?.token;
+      const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+      const token = storedData?.token;
+
+      if (!token) {
+        showToast("Error", "No token found in local storage", "error");
+        setLoading(false);
+        return;
+      }
+
       setLoading(true);
       setFeedPosts([]);
       try {
         const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`, {
-          method:"GET",
+          method: "GET",
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-        credentials: 'include'
-        
+          credentials: 'include',
         });
+
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Network response was not ok');
         }
+
         const data = await response.json();
-        setFeedPosts(data.feedpost);
+        setFeedPosts(data.feedpost || []);
       } catch (err) {
         showToast("Error", err.message, "error");
         setError(err.message);
@@ -45,7 +55,6 @@ const HomePage = () => {
         setLoading(false);
       }
     };
-    
 
     const getUsers = async () => {
       try {
@@ -56,8 +65,14 @@ const HomePage = () => {
           },
           credentials: 'include',
         });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || 'Network response was not ok');
+        }
+
         const data = await res.json();
-        setUsers(data);
+        setUsers(data || []);
       } catch (error) {
         showToast("Error", error.message, "error");
       }
@@ -65,15 +80,13 @@ const HomePage = () => {
 
     getFeed();
     getUsers();
-  }, [setFeedPosts]);
+  }, [setFeedPosts, showToast]);
 
   if (loading) {
     return (
-      <div>
-        <Flex justifyContent='center'>
-          <Spinner size="xl" />
-        </Flex>
-      </div>
+      <Flex justifyContent='center' p={4}>
+        <Spinner size="xl" />
+      </Flex>
     );
   }
 
@@ -90,7 +103,7 @@ const HomePage = () => {
     <Flex p={4} direction="row" justifyContent="space-between" align="flex-start">
       <Box flex="3" mr={"10"}>
         {feedPosts.length === 0 ? (
-          <div>No posts available. Follow other users to see the posts.</div>
+          <Text>No posts available. Follow other users to see the posts.</Text>
         ) : (
           feedPosts.map((post) => (
             <Post
@@ -109,7 +122,7 @@ const HomePage = () => {
           </Text>
         )}
         {filteredUsers.length === 0 ? (
-          <div></div>
+          <Text>No users to display.</Text>
         ) : (
           <VStack align="stretch">
             {filteredUsers.map(u => (
@@ -128,9 +141,9 @@ const HomePage = () => {
                 alignItems="center"
               >
                 <Flex align="center">
-                <Link to={`/${u.username}`}>
-                  <Avatar src={u.profilePic} />
-                </Link>
+                  <Link to={`/${u.username}`}>
+                    <Avatar src={u.profilePic} />
+                  </Link>
                   <Box ml={4}>
                     <Link to={`/${u.username}`}>
                       <Text fontSize="md">{u.name}</Text>

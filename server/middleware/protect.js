@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 const protect = async (req, res, next) => {
     try {
         const token = req.cookies.jwt;
-        console.log('Token:', token); // Log token for debugging
+        console.log('Token:', token); 
 
         if (!token) {
             console.log('No token provided');
