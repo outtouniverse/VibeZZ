@@ -66,6 +66,7 @@ export default function Login() {
         bio: data.bio,
         profilepic: data.profilepic,
       }));
+  
       
       
       setUser({
