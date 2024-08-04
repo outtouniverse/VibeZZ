@@ -80,7 +80,7 @@ const HomePage = () => {
 
     getFeed();
     getUsers();
-  }, [setFeedPosts, showToast]);
+  }, [setFeedPosts]);
 
   if (loading) {
     return (
