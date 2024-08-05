@@ -13,30 +13,32 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const [users, setUsers] = useState([]);
   const showToast = useShowToast();
-  const [user] = useRecoilState(userAtom); // Only read user info from state
+  const [user] = useRecoilState(userAtom);
 
   const bgColor = useColorModeValue('gray.400', 'gray.light');
   const hoverBgColor = useColorModeValue('gray.500', 'gray.dark');
 
   useEffect(() => {
     const getFeed = async () => {
-      const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
-      const token = storedData?.token;
-
-      if (!token) {
-        showToast("Error", "No token found in local storage", "error");
-        setLoading(false);
-        return;
-      }
-
-      setLoading(true);
-      setFeedPosts([]);
       try {
+        const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+        if (!storedData || !storedData.token) {
+          showToast("Error", "No token found in local storage", "error");
+          setLoading(false);
+          return;
+        }
+
+        const token = storedData.token;
+        console.log("Retrieved Token:", token); // Debugging line
+
+        setLoading(true);
+        setFeedPosts([]);
+
         const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`, {
           method: "GET",
-          credentials: 'include', // Ensures cookies are sent
+          credentials: 'include', // Ensure cookies are included
           headers: {
-            'x-auth-token': token, // Use 'Authorization': `Bearer ${token}` if your server expects it
+            'x-auth-token': token,
             'Content-Type': 'application/json',
           },
         });
@@ -64,7 +66,7 @@ const HomePage = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include', // Ensures cookies are sent
+          credentials: 'include',
         });
 
         if (!res.ok) {
