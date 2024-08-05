@@ -20,7 +20,7 @@ const UserPage = () => {
                 const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
                 if (!storedData || !storedData.token) {
                   showToast("Error", "No token found in local storage", "error");
-                  setLoading(false);
+                 
                   return;
                 }
         
