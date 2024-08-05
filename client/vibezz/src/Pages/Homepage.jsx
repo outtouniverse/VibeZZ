@@ -20,7 +20,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const getFeed = async () => {
-      const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+      const storedData = localStorage.getItem('user-vibezz');
       const token = storedData?.token;
 
       if (!token) {
