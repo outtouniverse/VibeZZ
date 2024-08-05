@@ -32,6 +32,7 @@ const HomePage = () => {
       setLoading(true);
       setFeedPosts([]);
       try {
+        console.log('Fetching feed with token:', token);
         const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`, {
           method: "GET",
           headers: {
@@ -49,6 +50,7 @@ const HomePage = () => {
         const data = await response.json();
         setFeedPosts(data.feedpost || []);
       } catch (err) {
+        console.error('Error fetching feed:', err);
         showToast("Error", err.message, "error");
         setError(err.message);
       } finally {
@@ -58,6 +60,7 @@ const HomePage = () => {
 
     const getUsers = async () => {
       try {
+        console.log('Fetching users');
         const res = await fetch(`https://vibe-zz.vercel.app/api/users/alluser`, {
           method: 'GET',
           headers: {
@@ -74,6 +77,7 @@ const HomePage = () => {
         const data = await res.json();
         setUsers(data || []);
       } catch (error) {
+        console.error('Error fetching users:', error);
         showToast("Error", error.message, "error");
       }
     };
