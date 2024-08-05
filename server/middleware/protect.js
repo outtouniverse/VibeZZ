@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 const protect = async (req, res, next) => {
     try {
         const token = req.header('x-auth-token');
-        console.log('Token:', token); 
+        console.log('Received Token:', token); 
 
         if (!token) {
             console.log('No token provided');
@@ -24,9 +24,10 @@ const protect = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        console.error('Error:', error.message); // Log error for debugging
+        console.error('JWT Verification Error:', error.message); 
         res.status(401).json({ error: "Unauthorized access - Invalid token" });
     }
 };
+
 
 export { protect };
