@@ -20,7 +20,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const getFeed = async () => {
-      const storedData = localStorage.getItem('user-vibezz');
+      const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
       const token = storedData?.token;
 
       if (!token) {
@@ -34,11 +34,11 @@ const HomePage = () => {
       try {
         const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`, {
           method: "GET",
+          credentials: 'include', // Ensures cookies are sent
           headers: {
-            'x-auth-token': token, 
+            'x-auth-token': token, // Use 'Authorization': `Bearer ${token}` if your server expects it
             'Content-Type': 'application/json',
           },
-          credentials: 'include',
         });
 
         if (!response.ok) {
@@ -64,7 +64,7 @@ const HomePage = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include',
+          credentials: 'include', // Ensures cookies are sent
         });
 
         if (!res.ok) {
