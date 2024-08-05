@@ -20,9 +20,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const getFeed = async () => {
-      const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
-      const token = storedData?.token;
-
+      const token = localStorage.getItem('user-vibezz');
       if (!token) {
         showToast("Error", "No token found in local storage", "error");
         setLoading(false);

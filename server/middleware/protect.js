@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 const protect = async (req, res, next) => {
     try {
-        const token = req.cookies.jwt;
+        const token = req.header('x-auth-token');
         console.log('Token:', token); 
 
         if (!token) {
