@@ -22,10 +22,23 @@ const Actions = ( {post} ) => {
         if(!user) return showtoast('Error',"Log in to like",'error')
         if(islike)return;
         setislike(true)
+        const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+        if (!storedData || !storedData.token) {
+          showToast("Error", "No token found in local storage", "error");
+          setLoading(false);
+          return;
+        }
+
+        const token = storedData.token;
         try {
+            
             const res=await fetch(`https://vibe-zz.vercel.app/api/posts/like/`+post._id,{
                 method:"PUT",
-                headers:{"Content-Type":"application/json"},
+                credentials: 'include', 
+          headers: {
+            'x-auth-token': token,
+            'Content-Type': 'application/json',
+          },
                 body:JSON.stringify({userId:user._id})
             })
 
@@ -58,10 +71,22 @@ const Actions = ( {post} ) => {
         if(!user) return showtoast('Error',"Log in to reply",'error')
         if(isreply) return;
         setisreply(true);   
+        const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+        if (!storedData || !storedData.token) {
+          showToast("Error", "No token found in local storage", "error");
+          setLoading(false);
+          return;
+        }
+
+        const token = storedData.token;
         try{
             const res=await fetch(`https://vibe-zz.vercel.app/api/posts/reply/`+post._id,{
                 method:"PUT",
-                headers:{"Content-Type":"application/json"},
+                credentials: 'include', 
+                headers: {
+                  'x-auth-token': token,
+                  'Content-Type': 'application/json',
+                },
                 body:JSON.stringify({text:reply})
 
             }   

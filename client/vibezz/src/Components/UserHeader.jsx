@@ -37,12 +37,22 @@ const UserHeader = ({ user }) => {
         }
 
         setupdating(true);
+        const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+        if (!storedData || !storedData.token) {
+          showToast("Error", "No token found in local storage", "error");
+          setLoading(false);
+          return;
+        }
+
+        const token = storedData.token;
 
         try {
             const res = await fetch(`https://vibe-zz.vercel.app/api/users/follow/${user._id}`, {
                 method: "POST",
+                credentials: 'include', 
                 headers: {
-                    "Content-Type": "application/json",
+                  'x-auth-token': token,
+                  'Content-Type': 'application/json',
                 },
             });
 

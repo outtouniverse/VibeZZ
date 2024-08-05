@@ -36,7 +36,7 @@ const HomePage = () => {
 
         const response = await fetch(`https://vibe-zz.vercel.app/api/posts/feed`, {
           method: "GET",
-          credentials: 'include', // Ensure cookies are included
+          credentials: 'include', 
           headers: {
             'x-auth-token': token,
             'Content-Type': 'application/json',

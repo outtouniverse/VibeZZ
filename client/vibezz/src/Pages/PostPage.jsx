@@ -27,13 +27,23 @@ const PostPage = () => {
     }
 
     const fetchPost = async () => {
+      const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+      if (!storedData || !storedData.token) {
+        showToast("Error", "No token found in local storage", "error");
+        setLoading(false);
+        return;
+      }
+
+      const token = storedData.token;
       setposts([])
       try {
         const res = await fetch(`https://vibe-zz.vercel.app/api/posts/${pid}`, {
           method: "GET",
+          credentials: 'include', 
           headers: {
-            "Content-Type": "application/json",
-          }
+            'x-auth-token': token,
+            'Content-Type': 'application/json',
+          },
         });
         if (!res.ok) {
           const errorData = await res.json();
@@ -50,15 +60,25 @@ const PostPage = () => {
     fetchPost();
   }, [pid,setposts]);
  const handledel=async()=>{
+  const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+  if (!storedData || !storedData.token) {
+    showToast("Error", "No token found in local storage", "error");
+    setLoading(false);
+    return;
+  }
+
+  const token = storedData.token;
     try {
      
       if(!window.confirm("Are you sure you want to delete this post?"))return;
 
       const res=await fetch(`https://vibe-zz.vercel.app/api/posts/${currentpost?._id}`,{
         method:"DELETE",
+        credentials: 'include', 
         headers: {
-          "Content-Type": "application/json",
-        }
+          'x-auth-token': token,
+          'Content-Type': 'application/json',
+        },
 
       });
       const data=await res.json();

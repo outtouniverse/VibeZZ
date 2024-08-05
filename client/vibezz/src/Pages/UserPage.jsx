@@ -17,10 +17,23 @@ const UserPage = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             if (user && user.username) {
-                
+                const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+                if (!storedData || !storedData.token) {
+                  showToast("Error", "No token found in local storage", "error");
+                  setLoading(false);
+                  return;
+                }
+        
+                const token = storedData.token;
                 try {
                     setFetching(true);
-                    const response = await fetch(`https://vibe-zz.vercel.app/api/posts/user/${user.username}`);
+                    const response = await fetch(`https://vibe-zz.vercel.app/api/posts/user/${user.username}`,{
+                        credentials: 'include', 
+                        headers: {
+                          'x-auth-token': token,
+                          'Content-Type': 'application/json',
+                        },
+                    });
                    
                     if (!response.ok) {
                         throw new Error("Failed to fetch posts");

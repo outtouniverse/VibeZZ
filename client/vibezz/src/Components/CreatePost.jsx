@@ -38,10 +38,22 @@ export const CreatePost = () => {
 
   const handlePost = async () => {
     setLoading(true)
+    const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+        if (!storedData || !storedData.token) {
+          showToast("Error", "No token found in local storage", "error");
+          setLoading(false);
+          return;
+        }
+
+        const token = storedData.token;
     try {
       const res = await fetch(`https://vibe-zz.vercel.app/api/posts/create`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', 
+        headers: {
+          'x-auth-token': token,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ postedBy: user._id, text: postText, img: imgUrl })
       });
       const data = await res.json();

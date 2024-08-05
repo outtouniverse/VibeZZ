@@ -36,10 +36,21 @@ export default function UpdateProfile() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
+    const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+        if (!storedData || !storedData.token) {
+          showToast("Error", "No token found in local storage", "error");
+          setLoading(false);
+          return;
+        }
+
+        const token = storedData.token;
+        console.log("Retrieved Token:", token);
     try {
       const res = await fetch(`https://vibe-zz.vercel.app/api/users/update/${user._id}`, {
         method: 'PUT',
+        credentials: 'include', 
         headers: {
+          'x-auth-token': token,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ ...inputs, profilePic: imgUrl }), 
