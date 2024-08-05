@@ -65,6 +65,7 @@ export default function Login() {
         username: data.username,
         bio: data.bio,
         profilepic: data.profilepic,
+        token: data.token,
       }));
   
       
@@ -77,7 +78,7 @@ export default function Login() {
         bio: data.bio,
         profilepic: data.profilepic,
       });
-      
+
     } catch (error) {
       console.error('Error during login:', error);
       showToast('Error', error.toString(), 'error');
