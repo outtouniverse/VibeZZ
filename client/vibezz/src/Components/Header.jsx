@@ -14,49 +14,9 @@ import { useShowToast } from '../hooks/useShowToast';
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const authScreenAtom=useSetRecoilState(authAtom)
-  const { user, loading } = usegetpro();
-  const [posts, setPosts] = useRecoilState(postsAtom)
-  const [fetching, setFetching] = useState(true);
-  const showToast = useShowToast();
-
-  useEffect(() => {
-      const fetchPosts = async () => {
-          if (user && user.username) {
-              const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
-              if (!storedData || !storedData.token) {
-                showToast("Error", "No token found in local storage", "error");
-               
-                return;
-              }
-      
-              const token = storedData.token;
-              try {
-                  setFetching(true);
-                  const response = await fetch(`https://vibe-zz.vercel.app/api/posts/user/${user.username}`,{
-                      credentials: 'include', 
-                      headers: {
-                        'x-auth-token': token,
-                        'Content-Type': 'application/json',
-                      },
-                  });
-                 
-                  if (!response.ok) {
-                      throw new Error("Failed to fetch posts");
-                  }
-                  const data = await response.json();
-                  
-                  setPosts(Array.isArray(data.posts) ? data.posts : []);
-              } catch (error) {
-                  console.error('Error fetching posts:', error); 
-                  showToast("Error","Failed to fetch posts", "error");
-              } finally {
-                  setFetching(false);
-                  console.log('Finished fetching');
-              }
-          }
-      };
-      fetchPosts();
-  }, [user,setPosts]);
+  const user=useRecoilState(userAtom)
+  
+  
 
   return (
     <Flex justifyContent="space-between" mt={6} mb={12}>
@@ -94,7 +54,7 @@ const Header = () => {
 )}
       {user && (
         <Link as={RouterLink} to={`/${user.username}`}>
-         <Avatar size="sm" src={user.profilePic} />
+         <BsPersonCircle/>
         </Link>
       )}
     </Flex>
