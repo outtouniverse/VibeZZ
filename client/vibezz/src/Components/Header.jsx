@@ -1,5 +1,5 @@
 import { Flex, useColorMode, Image, Link } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { Link as RouterLink } from "react-router-dom";
@@ -11,6 +11,34 @@ const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const user = useRecoilValue(userAtom);
   const authScreenAtom=useSetRecoilState(authAtom)
+  const [users, setUsers] = useState([]);
+  const showToast = useShowToast();
+  
+
+  useEffect(()=>{
+    const getUsers = async () => {
+      try {
+        const res = await fetch(`https://vibe-zz.vercel.app/api/users/alluser`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || 'Network response was not ok');
+        }
+
+        const data = await res.json();
+        setUsers(data || []);
+      } catch (error) {
+        showToast("Error", error.message, "error");
+      }
+    };
+    getUsers();
+  })
 
   return (
     <Flex justifyContent="space-between" mt={6} mb={12}>
@@ -48,7 +76,7 @@ const Header = () => {
 )}
       {user && (
         <Link as={RouterLink} to={`/${user.username}`}>
-          <BsPersonCircle size="30" />
+         <Avatar src={user.profilePic} />
         </Link>
       )}
     </Flex>
