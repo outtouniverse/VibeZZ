@@ -97,8 +97,7 @@ const HomePage = () => {
     return <div>Error: {error}</div>;
   }
 
-  const currentUser = user
-  s.find(u => u.username === user.username);
+  const currentUser = users.find(u => u.username === user.username);
   const followingList = currentUser ? currentUser.following : [];
 
   const filteredUsers = users.filter(u => u.username !== user.username && !followingList.includes(u._id));
