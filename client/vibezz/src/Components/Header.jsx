@@ -54,7 +54,7 @@ const Header = () => {
 )}
       {user && (
         <Link as={RouterLink} to={`/${user.username}`}>
-         <BsPersonCircle size="xs"/>
+          <BsPersonCircle size="30" />
         </Link>
       )}
     </Flex>
