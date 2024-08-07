@@ -61,7 +61,15 @@ export default function UpdateProfile() {
       } else {
         setUser(data); 
         
-        localStorage.setItem('user-vibezz', JSON.stringify(data)); 
+        localStorage.setItem('user-vibezz', JSON.stringify({
+          _id: data._id,
+          name: data.name,
+          email: data.email,
+          username: data.username,
+          bio: data.bio,
+          profilepic: data.profilepic,
+          token: data.token,
+        }));
         showToast("Success",'Profile updated successfully', 'success');
       }
     } catch (error) {

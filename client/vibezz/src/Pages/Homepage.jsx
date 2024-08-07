@@ -97,13 +97,14 @@ const HomePage = () => {
     return <div>Error: {error}</div>;
   }
 
-  const currentUser = users.find(u => u.username === user.username);
+  const currentUser = user
+  s.find(u => u.username === user.username);
   const followingList = currentUser ? currentUser.following : [];
 
   const filteredUsers = users.filter(u => u.username !== user.username && !followingList.includes(u._id));
 
   return (
-    <Flex p={4} direction="row" justifyContent="space-between" align="flex-start">
+    <Flex p={4} direction="row" justifyContent="space-between" align="flex-start">\ 
       <Box flex="3" mr={"10"}>
         {feedPosts.length === 0 ? (
           <Text>No posts available. Follow other users to see the posts.</Text>
@@ -115,6 +116,9 @@ const HomePage = () => {
               postedBy={post.postedBy}
             />
           ))
+
+
+
         )}
       </Box>
 
