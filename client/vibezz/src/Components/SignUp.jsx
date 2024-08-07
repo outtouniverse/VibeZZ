@@ -25,6 +25,7 @@ import authScreenAtom from '../atoms/authAtom.js';
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
+  const setUser = useSetRecoilState(userAtom);
   const [inputs, setInputs] = useState({
     name: "",
     username: "",
@@ -35,13 +36,14 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
-    setLoading(true); // Set loading state to true when signup starts
+    setLoading(true); 
     try {
       const response = await fetch(`https://vibe-zz.vercel.app/api/users/sign`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: 'include',
         body: JSON.stringify(inputs)
       });
       const data = await response.json();
@@ -54,13 +56,31 @@ export default function SignUp() {
           isClosable: true,
         });
       } else {
-        console.log("Data received from server:", data); // Debug statement
-        localStorage.setItem("user-vibezz", JSON.stringify(data));
+        
+        localStorage.setItem('user-vibezz', JSON.stringify({
+          _id: data._id,
+          name: data.name,
+          email: data.email,
+          username: data.username,
+          bio: data.bio,
+          profilepic: data.profilepic,
+          token: data.token,
+        }));
+        
+      setUser({
+        _id: data._id,
+        name: data.name,
+        email: data.email,
+        username: data.username,
+        bio: data.bio,
+        profilepic: data.profilepic,
+      });
+
         toast({
           title: 'Success',
           description: 'Account created successfully',
           status: 'success',
-          duration: 1000,
+          duration: 700,
           isClosable: true,
           onCloseComplete: () => {
             window.location.href = '/'; 
