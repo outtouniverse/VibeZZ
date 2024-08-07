@@ -41,6 +41,8 @@ const Header = () => {
     getUsers();
   })
 
+  const currentUser = users.find(u => u.username === user.username);
+
   return (
     <Flex justifyContent="space-between" mt={6} mb={12}>
       {user && (
@@ -77,7 +79,7 @@ const Header = () => {
 )}
       {user && (
         <Link as={RouterLink} to={`/${user.username}`}>
-         <Avatar size="sm" src={user.profilePic} />
+         <Avatar size="sm" src={currentUser.profilePic} />
         </Link>
       )}
     </Flex>

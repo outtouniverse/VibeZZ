@@ -29,8 +29,7 @@ const HomePage = () => {
         }
 
         const token = storedData.token;
-        console.log("Retrieved Token:", token); 
-
+      
         setLoading(true);
         setFeedPosts([]);
 
@@ -49,7 +48,7 @@ const HomePage = () => {
         }
 
         const data = await response.json();
-        console.log('Feed Data:', data);
+       
         setFeedPosts(data.feedpost || []);
       } catch (err) {
         showToast("Error", err.message, "error");
