@@ -29,7 +29,7 @@ const HomePage = () => {
         }
 
         const token = storedData.token;
-        console.log("Retrieved Token:", token); // Debugging line
+        console.log("Retrieved Token:", token); 
 
         setLoading(true);
         setFeedPosts([]);
@@ -103,7 +103,7 @@ const HomePage = () => {
   const filteredUsers = users.filter(u => u.username !== user.username && !followingList.includes(u._id));
 
   return (
-    <Flex p={4} direction="row" justifyContent="space-between" align="flex-start">\ 
+    <Flex p={4} direction="row" justifyContent="space-between" align="flex-start">
       <Box flex="3" mr={"10"}>
         {feedPosts.length === 0 ? (
           <Text>No posts available. Follow other users to see the posts.</Text>
