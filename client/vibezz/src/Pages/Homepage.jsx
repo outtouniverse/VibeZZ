@@ -124,11 +124,11 @@ const HomePage = () => {
       <Box flex="1" width="10">
         {filteredUsers.length > 0 && (
           <Text fontSize="xl" fontWeight="bold" mb={8}>
-            All Users
+            All users
           </Text>
         )}
         {filteredUsers.length === 0 ? (
-          <Text>No users to display.</Text>
+          <Text>You are following all the existing users</Text>
         ) : (
           <VStack align="stretch">
             {filteredUsers.map(u => (
