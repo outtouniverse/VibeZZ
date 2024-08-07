@@ -5,6 +5,7 @@ import userAtom from "../atoms/userAtom";
 import { usegetpro } from "../hooks/usegetpro";
 import { Link as RouterLink } from "react-router-dom";
 import { BsHouseExclamationFill, BsPersonCircle } from "react-icons/bs";
+import { useRecoilState } from "recoil";
 import { Avatar } from "@chakra-ui/react"; 
 import authAtom from "../atoms/authAtom.js"
 import { useShowToast } from '../hooks/useShowToast';
