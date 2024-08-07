@@ -2,6 +2,7 @@ import { Flex, useColorMode, Image, Link } from "@chakra-ui/react";
 import React, { useEffect,useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
+import { usegetpro } from "../hooks/usegetpro";
 import { Link as RouterLink } from "react-router-dom";
 import { BsHouseExclamationFill, BsPersonCircle } from "react-icons/bs";
 import { Avatar } from "@chakra-ui/react"; 
@@ -10,38 +11,50 @@ import { useShowToast } from '../hooks/useShowToast';
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const user = useRecoilValue(userAtom);
   const authScreenAtom=useSetRecoilState(authAtom)
-  const [users, setUsers] = useState([]);
+  const { user, loading } = usegetpro();
+  const [posts, setPosts] = useRecoilState(postsAtom)
+  const [fetching, setFetching] = useState(true);
   const showToast = useShowToast();
-  
 
-  useEffect(()=>{
-    const getUsers = async () => {
-      try {
-        const res = await fetch(`https://vibe-zz.vercel.app/api/users/alluser`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-
-        if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(errorData.message || 'Network response was not ok');
-        }
-
-        const data = await res.json();
-        setUsers(data || []);
-      } catch (error) {
-        showToast("Error", error.message, "error");
-      }
-    };
-    getUsers();
-  })
-
-  const currentUser = users.find(u => u.username === user.username);
+  useEffect(() => {
+      const fetchPosts = async () => {
+          if (user && user.username) {
+              const storedData = JSON.parse(localStorage.getItem('user-vibezz'));
+              if (!storedData || !storedData.token) {
+                showToast("Error", "No token found in local storage", "error");
+               
+                return;
+              }
+      
+              const token = storedData.token;
+              try {
+                  setFetching(true);
+                  const response = await fetch(`https://vibe-zz.vercel.app/api/posts/user/${user.username}`,{
+                      credentials: 'include', 
+                      headers: {
+                        'x-auth-token': token,
+                        'Content-Type': 'application/json',
+                      },
+                  });
+                 
+                  if (!response.ok) {
+                      throw new Error("Failed to fetch posts");
+                  }
+                  const data = await response.json();
+                  
+                  setPosts(Array.isArray(data.posts) ? data.posts : []);
+              } catch (error) {
+                  console.error('Error fetching posts:', error); 
+                  showToast("Error","Failed to fetch posts", "error");
+              } finally {
+                  setFetching(false);
+                  console.log('Finished fetching');
+              }
+          }
+      };
+      fetchPosts();
+  }, [user,setPosts]);
 
   return (
     <Flex justifyContent="space-between" mt={6} mb={12}>
@@ -79,7 +92,7 @@ const Header = () => {
 )}
       {user && (
         <Link as={RouterLink} to={`/${user.username}`}>
-         <Avatar size="sm" src={currentUser.profilePic} />
+         <Avatar size="sm" src={user.profilePic} />
         </Link>
       )}
     </Flex>
