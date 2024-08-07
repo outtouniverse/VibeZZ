@@ -77,7 +77,7 @@ const Header = () => {
 )}
       {user && (
         <Link as={RouterLink} to={`/${user.username}`}>
-         <Avatar src={user.profilePic} />
+         <Avatar size="sm" src={user.profilePic} />
         </Link>
       )}
     </Flex>
