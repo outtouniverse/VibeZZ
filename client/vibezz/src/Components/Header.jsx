@@ -1,20 +1,17 @@
 import { Flex, useColorMode, Image, Link } from "@chakra-ui/react";
 import React, { useEffect,useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import userAtom from "../atoms/userAtom";
-import { usegetpro } from "../hooks/usegetpro";
+import userAtom from "../atoms/userAtom.js";
 import { Link as RouterLink } from "react-router-dom";
 import { BsHouseExclamationFill, BsPersonCircle } from "react-icons/bs";
-import postsAtom from "../atoms/postsAtom";
-import { useRecoilState } from "recoil";
-import { Avatar } from "@chakra-ui/react"; 
+
 import authAtom from "../atoms/authAtom.js"
-import { useShowToast } from '../hooks/useShowToast';
+
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const authScreenAtom=useSetRecoilState(authAtom)
-  const user=useRecoilState(userAtom)
+  const user = useRecoilValue(userAtom);
   
   
 
